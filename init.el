@@ -440,6 +440,10 @@
 (req lcomp
   (lcomp-install))
 
+;; imenu-anywhere
+(bundle imenu-anywhere)
+(req imenu-anywhere)
+
 ;; recentf-ext (Recentf extensions)
 (bundle recentf-ext)
 (req recentf-ext
@@ -509,3 +513,33 @@
   (req gtags-ext
        (setq gtags-select-buffer-single t)))
 
+;;;-------------------------------------------------------------------
+;;; command memo
+;;;-------------------------------------------------------------------
+; magit-status
+; re-builder
+; imenu-anywhere
+; eshell
+; ielm (C-c C-d => ielm finish)
+; locate-library
+; install-elisp-from-emacswiki [*.el]
+; list-faces-display / list-colors-display
+; revert-buffer / reopen-file
+; wipe
+; describe-face-at-point
+; vc-*  [e.g] print-log/diff/version-diff/annotate
+; table-insert
+; upcase-word / downcase-word
+; define-global-abbrev
+; gtags-visit-rootdir / gtags-find-rtag / gtags-find-symbol
+; toggle-read-only (C-x C-q)
+; write-file
+; hexl-mode
+; gud-gdb (face -> comint-highlight-input)
+; moccur-grep / moccur-grep-find
+; align / align-regexp / indent-region
+; follow-mode (follow-delete-other-windows-and-split)
+; column-highlight-mode
+; ediff-merge / ediff-buffers / ediff-directories
+; se/make-summary-buffer
+; describe-char
