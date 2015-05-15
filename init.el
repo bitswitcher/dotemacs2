@@ -260,6 +260,9 @@
 (setq auto-mode-alist (cons '("\\.inc$" . makefile-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.mak$" . makefile-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Makefile\\..*$" . makefile-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.md$" . gfm-mode) auto-mode-alist))  ;; Github flavor markdown mode
+(setq auto-mode-alist (cons '("\\.mdwn$" . gfm-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.markdown$" . gfm-mode) auto-mode-alist))
 
 ;;;-------------------------------------------------------------------
 ;;; Packages (not install)
@@ -440,7 +443,7 @@
 (req lcomp
   (lcomp-install))
 
-;; imenu-anywhere
+;; imenu-anywhere (Ido/helm imenu tag selection across all buffers with the same mode)
 (bundle imenu-anywhere)
 (req imenu-anywhere)
 
@@ -469,6 +472,25 @@
 (req gtags
   (global-set-key [f5] 'gtags-find-tag)       ; gtags-find-tag-other-window
   (global-set-key [f6] 'gtags-pop-stack))
+
+;; emacs-w3m (simple Emacs interface to w3m)
+(bundle emacs-w3m)
+(req emacs-w3m
+  (setq browse-url-generic-program
+    (executable-find "/usr/bin/w3m")
+    browse-url-browser-function 'browse-url-generic))
+
+;; websocket (websocket implementation in elisp, for emacs)
+(bundle websocket)
+(req websocket)
+
+;; markdown-mode (Major mode to edit Markdown files in Emacs)
+(bundle markdown-mode)
+(req markdown-mode
+  (defun markdown-custom ()
+    "markdown-mode-hook"
+    (setq markdown-command-needs-filename t))
+  (add-hook 'markdown-mode-hook '(lambda() (markdown-custom))))
 
 ;; magit (An Emacs mode for Git)
 (bundle magit)
