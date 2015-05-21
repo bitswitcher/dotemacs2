@@ -569,6 +569,7 @@
     (setq jaspace-alternate-jaspace-string "□")
     (setq jaspace-highlight-tabs t)
     (setq jaspace-highlight-tabs ?^) ; abnormal
+    (set-face-foreground 'jaspace-highlight-tab-face "red")
     ))
 
 ;;;-------------------------------------------------------------------
