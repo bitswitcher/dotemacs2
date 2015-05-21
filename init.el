@@ -515,16 +515,6 @@
 (bundle git-commit-mode)
 (req git-commit-mode)
 
-;; jaspace (Make Japanese whitespaces visible)
-(bundle jaspace)
-(req jaspace
-  (setq jaspace-modes (append jaspace-modes
-			      (list 'makefile-mode
-				    'makefile-gmake-mode)))
-  (setq jaspace-alternate-jaspace-string "□")
-  ;(setq jaspace-highlight-tabs ?^) ; abnormal
-  (setq jaspace-highlight-tabs t))
-
 ;;;-------------------------------------------------------------------
 ;;; Packages (install 3rdparty elisp)
 ;;;-------------------------------------------------------------------
@@ -547,7 +537,18 @@
 (bundle bitswitcher/gtags-ext-el
   :name gtags-ext
   (req gtags-ext
-       (setq gtags-select-buffer-single t)))
+    (setq gtags-select-buffer-single t)))
+
+;; jaspace2 (Make Japanese whitespaces visible)
+(bundle bitswitcher/jaspace-el
+  :name jaspace2
+  (req jaspace2
+    (setq jaspace-modes (append jaspace-modes
+				(list 'makefile-mode
+				      'makefile-gmake-mode)))
+    (setq jaspace-alternate-jaspace-string "□")
+    ;(setq jaspace-highlight-tabs ?^) ; abnormal
+    (setq jaspace-highlight-tabs t)))
 
 ;;;-------------------------------------------------------------------
 ;;; command memo
