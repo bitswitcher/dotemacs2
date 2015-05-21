@@ -312,6 +312,26 @@
 ;; color-moccur
 (req color-moccur)
 
+;; whitespace
+;; (req whitespace
+;;   (set-face-foreground 'whitespace-space "DarkGoldenrod1")
+;;   (set-face-background 'whitespace-space nil)
+;;   (set-face-bold-p 'whitespace-space t)
+;;   (setq whitespace-style '(tabs
+;;                         trailing
+;;                         spaces
+;;                         space-mark
+;; ;;                         tab-mark
+;;                         ))
+;;   (setq whitespace-action '(auto-cleanup))
+;;   (global-whitespace-mode 1)
+;;   ;; highlight fullsize space
+;;   (setq whitespace-space-regexp "\\(\x3000+\\)")
+;;   (setq whitespace-display-mappings
+;;      '((space-mark ?\x3000 [?\□])
+;;        (tab-mark   ?\t   [?\xBB ?\t])
+;;        )))
+
 ;;;-------------------------------------------------------------------
 ;;; Packages (install with el-get-list-packages)
 ;;;-------------------------------------------------------------------
@@ -542,13 +562,14 @@
 ;; jaspace2 (Make Japanese whitespaces visible)
 (bundle bitswitcher/jaspace-el
   :name jaspace2
-  (req jaspace2
+  (req jaspace
     (setq jaspace-modes (append jaspace-modes
 				(list 'makefile-mode
 				      'makefile-gmake-mode)))
     (setq jaspace-alternate-jaspace-string "□")
-    ;(setq jaspace-highlight-tabs ?^) ; abnormal
-    (setq jaspace-highlight-tabs t)))
+    (setq jaspace-highlight-tabs t)
+    (setq jaspace-highlight-tabs ?^) ; abnormal
+    ))
 
 ;;;-------------------------------------------------------------------
 ;;; command memo
