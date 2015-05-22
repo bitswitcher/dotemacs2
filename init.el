@@ -51,8 +51,8 @@
 ;;;-------------------------------------------------------------------
 ;; (prefer-coding-system 'cp932-dos)
 ;; (set-default-coding-systems 'cp932-dos)
-;; (set-keyboard-coding-system 'euc-jp)
-;; (set-terminal-coding-system 'euc-jp)
+;; (set-keyboard-coding-system 'utf-8)
+;; (set-terminal-coding-system 'utf-8)
 
 ;;;-------------------------------------------------------------------
 ;;; Macro
