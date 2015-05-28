@@ -26,33 +26,35 @@
 (add-to-list 'el-get-recipe-path (locate-user-emacs-file "recipes"))
 
 ;;;-------------------------------------------------------------------
-;;; Language (common)
+;;; Language
 ;;;-------------------------------------------------------------------
-(set-language-environment "Japanese")
-
-;;;-------------------------------------------------------------------
-;;; Language (for recent linux)
-;;;-------------------------------------------------------------------
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-
-;;;-------------------------------------------------------------------
-;;; Language (for old linux)
-;;;-------------------------------------------------------------------
-;; (prefer-coding-system 'utf-8)
-;; (set-default-coding-systems 'euc-jp)
-;; (set-keyboard-coding-system 'euc-jp)
-;; (set-terminal-coding-system 'euc-jp)
-
-;;;-------------------------------------------------------------------
-;;; Language (for windows)
-;;;-------------------------------------------------------------------
-;; (prefer-coding-system 'cp932-dos)
-;; (set-default-coding-systems 'cp932-dos)
-;; (set-keyboard-coding-system 'utf-8)
-;; (set-terminal-coding-system 'utf-8)
+(cond
+ ((string-equal system-type "windows-nt")
+  (progn
+    (prefer-coding-system 'cp932-dos)
+    (set-default-coding-systems 'cp932-dos)
+    (set-keyboard-coding-system 'utf-8)
+    (set-terminal-coding-system 'utf-8)))
+ ((string-equal system-type "cygwin")
+  (progn
+    (prefer-coding-system 'cp932-dos)
+    (set-default-coding-systems 'cp932-dos)
+    (set-keyboard-coding-system 'utf-8)
+    (set-terminal-coding-system 'utf-8)))
+ ((string-equal system-type "darwin")
+  (progn
+    (set-language-environment "Japanese")
+    (prefer-coding-system 'utf-8)
+    (set-default-coding-systems 'utf-8)
+    (set-keyboard-coding-system 'utf-8)
+    (set-terminal-coding-system 'utf-8)))
+ ((string-equal system-type "gnu/linux")
+  (progn
+    (set-language-environment "Japanese")
+    (prefer-coding-system 'utf-8)
+    (set-default-coding-systems 'utf-8)
+    (set-keyboard-coding-system 'utf-8)
+    (set-terminal-coding-system 'utf-8))))
 
 ;;;-------------------------------------------------------------------
 ;;; Macro
