@@ -573,6 +573,53 @@
     ))
 
 ;;;-------------------------------------------------------------------
+;;; for dired mode
+;;;-------------------------------------------------------------------
+(add-hook 'dired-load-hook
+          '(lambda ()
+             (load-library "ls-lisp")
+             (setq ls-lisp-dirs-first t)
+             ))
+
+(require 'dired)
+(require 'dired-x)
+(put 'dired-find-alternate-file 'disabled nil)
+(defkey dired-mode-map "RET" 'dired-find-alternate-file)
+(defkey dired-mode-map "a" 'dired-advertised-find-file)
+(defkey dired-mode-map "r" 'wdired-change-to-wdired-mode)
+
+;;;-------------------------------------------------------------------
+;;; for c-mode
+;;;-------------------------------------------------------------------
+(setq c-mode-common-hook
+      '(lambda ()
+         (setq-default indent-tabs-mode nil)  ; tab -> white space
+         (modify-syntax-entry ?: ".")
+         (c-set-style "linux")
+         (c-set-offset 'case-label' 4)
+         (setq comment-column 40)
+         (setq comment-multi-line t)
+         (setq c-auto-newline nil)
+         (setq c-tab-always-indent t)
+         (setq tab-width 4)
+         (setq c-basic-offset tab-width)
+         (setq c-indent-level tab-width)
+         (setq c-continued-statement-offset tab-width)
+         (setq c-argdecl-indent 0)
+         (subword-mode t)
+         (gtags-mode t)
+         ))
+
+;;;-------------------------------------------------------------------
+;;; for makefile-mode
+;;;-------------------------------------------------------------------
+(add-hook 'makefile-mode-hook
+          (lambda ()
+            (defkey makefile-mode-map "M-n" 'nil) ; org(makefile-next-dependency)
+            (defkey makefile-mode-map "M-p" 'nil) ; org(makefile-previous-dependency)
+            ))
+
+;;;-------------------------------------------------------------------
 ;;; command memo
 ;;;-------------------------------------------------------------------
 ; magit-status
