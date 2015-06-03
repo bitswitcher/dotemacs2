@@ -514,11 +514,17 @@
     "markdown-mode-hook"
     (setq markdown-command-needs-filename t))
   (add-hook 'markdown-mode-hook '(lambda() (markdown-custom)))
-  (defun w3m-browse-url-other-window (url &optional newwin)
-    (let ((w3m-pop-up-windows t))
-      (if (one-window-p) (split-window))
-      (other-window 1)
-      (w3m-browse-url url newwin)))
+
+  ;; (defun w3m-browse-url-other-window (url &optional newwin)
+  ;;   (let ((w3m-pop-up-windows t))
+  ;;     (if (one-window-p) (split-window))
+  ;;     (other-window 1)
+  ;;     (w3m-browse-url url newwin)))
+  (defun eww-open-file-other-window (file)
+    (if (one-window-p) (split-window))
+    (other-window 1)
+    (eww-open-file file))
+
   (defun markdown-render-w3m (n)
     (interactive "p")
     (message (buffer-file-name))
@@ -526,7 +532,8 @@
 		  (buffer-file-name)
 		  "-s" "-o"
 		  "/tmp/mdconv.html")
-    (w3m-browse-url-other-window "file://tmp/mdconv.html"))
+    ;; (w3m-browse-url-other-window "file://tmp/mdconv.html"))
+    (eww-open-file-other-window "/tmp/mdconv.html"))
   (define-key markdown-mode-map "\C-c\C-c" 'markdown-render-w3m))
 
 ;; magit (An Emacs mode for Git)
