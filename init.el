@@ -121,6 +121,7 @@
 (scroll-lock-mode t)
 (savehist-mode t)
 (temp-buffer-resize-mode t)
+(electric-indent-mode -1)
 (load "saveplace")
 ;(setq highlight-nonselected-windows t)
 (show-paren-mode t)
