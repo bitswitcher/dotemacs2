@@ -466,6 +466,11 @@
 (req lcomp
   (lcomp-install))
 
+;; ace-jump-mode (A quick cursor location minor mode for emacs)
+(bundle ace-jump-mode)
+(req ace-jump-mode
+  (gdefkey "C-c SPC" 'ace-jump-mode))
+
 ;; imenu-anywhere (Ido/helm imenu tag selection across all buffers with the same mode)
 (bundle imenu-anywhere)
 (req imenu-anywhere)
