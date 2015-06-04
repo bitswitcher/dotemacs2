@@ -182,6 +182,23 @@
 (add-hook 'gdb-mode-hook '(lambda () (gud-tooltip-mode t)))
 
 ;;;-------------------------------------------------------------------
+;;; Base setting (os dependency)
+;;;-------------------------------------------------------------------
+(cond
+ ((string-equal system-type "windows-nt")
+  (progn
+    (setq-default indent-tabs-mode t)))
+ ((string-equal system-type "cygwin")
+  (progn
+    (setq-default indent-tabs-mode t)))
+ ((string-equal system-type "darwin")
+  (progn
+    (setq-default indent-tabs-mode nil)))
+ ((string-equal system-type "gnu/linux")
+  (progn
+    (setq-default indent-tabs-mode nil))))
+
+;;;-------------------------------------------------------------------
 ;;; mode-line
 ;;;-------------------------------------------------------------------
 (line-number-mode t)
@@ -290,18 +307,18 @@
     coding
     (:name " coding ")
     (if (coding-system-get buffer-file-coding-system 'mime-charset)
-	(format " %s" (coding-system-get buffer-file-coding-system 'mime-charset))
+        (format " %s" (coding-system-get buffer-file-coding-system 'mime-charset))
       " undefined"
       ))
   (setq ibuffer-formats '((mark modified read-only " "
-				(name 35 35) " "
-				(size 6 -1) " "
-				(coding 12 12) " "
-				(mode 15 15))
-			  (mark (name 25 -1) " "
-				(coding 12 12) " "
-				(mode 15 -1))
-			  ))
+                                (name 35 35) " "
+                                (size 6 -1) " "
+                                (coding 12 12) " "
+                                (mode 15 15))
+                          (mark (name 25 -1) " "
+                                (coding 12 12) " "
+                                (mode 15 -1))
+                          ))
   (gdefkey "\C-x\C-b" 'ibuffer))
 
 ;; wdired
@@ -348,10 +365,10 @@
   (setq tabbar-buffer-groups-function nil)
   (setq tabbar-separator '(1.5))
   (dolist (btn '(tabbar-buffer-home-button
-		 tabbar-scroll-left-button
-		 tabbar-scroll-right-button))
+                 tabbar-scroll-left-button
+                 tabbar-scroll-right-button))
     (set btn (cons (cons "" nil)
-		   (cons "" nil))))
+                   (cons "" nil))))
   (setq tabbar-auto-scroll-flag t)
   (defvar my-tabbar-displayed-buffers
     '("*Faces*" "*vc-")
@@ -359,19 +376,19 @@
   (defun my-tabbar-buffer-list ()
     ""
     (let* ((hides (list ?\ ?\*))
-	   (re (regexp-opt my-tabbar-displayed-buffers))
-	   (cur-buf (current-buffer))
-	   (tabs (delq nil
-		       (mapcar (lambda (buf)
-				 (let ((name (buffer-name buf)))
-				   (when (or (string-match re name)
-                                           (not (memq (aref name 0) hides)))
-				     buf)))
-			       (buffer-list)))))
+           (re (regexp-opt my-tabbar-displayed-buffers))
+           (cur-buf (current-buffer))
+           (tabs (delq nil
+                       (mapcar (lambda (buf)
+                                 (let ((name (buffer-name buf)))
+                                   (when (or (string-match re name)
+                                         (not (memq (aref name 0) hides)))
+                                     buf)))
+                               (buffer-list)))))
       ;; Always include the current buffer.
       (if (memq cur-buf tabs)
-	  tabs
-	(cons cur-buf tabs))))
+          tabs
+        (cons cur-buf tabs))))
   (setq tabbar-buffer-list-function 'my-tabbar-buffer-list)
   (gdefkey "<right>" 'tabbar-forward-tab)
   (gdefkey "<left>" 'tabbar-backward-tab))
@@ -380,9 +397,9 @@
 (bundle session)
 (req session
   (setq session-initialize '(de-saveplace session keys menus places)
-	session-globals-include '((kill-ring 50)
-				  (session-file-alist 500 t)
-				  (file-name-history 10000)))
+        session-globals-include '((kill-ring 50)
+                                  (session-file-alist 500 t)
+                                  (file-name-history 10000)))
   (setq session-globals-max-string 100000000)
   (setq history-length t)
   (add-hook 'after-init-hook 'session-initialize)
@@ -425,8 +442,8 @@
   ;; kill-buffer-hook is not called when emacs is killed, so we
   ;; must save all bookmarks first.
   (add-hook 'kill-emacs-hook '(lambda nil
-				(bm-buffer-save-all)
-				(bm-repository-save)))
+                                (bm-buffer-save-all)
+                                (bm-repository-save)))
   (gdefkey "M-n" 'bm-next)
   (gdefkey "M-p" 'bm-previous)
   (gdefkey "M-SPC" 'bm-toggle))
@@ -451,15 +468,15 @@
 (req popwin
   (setq display-buffer-function 'popwin:display-buffer)
   (setq popwin:special-display-config '(
-					(" *auto-async-byte-compile*" :height 0.3 :tail On)
-					("*Kill Ring*" :height 0.5)
-					("*Help*" :height 0.5)
-					("*Completions*" :height 0.5)
-					("*Ido Completions*" :height 0.5)
-					("*Backtrace*" :height 0.5)
-					(" *undo-tree*" :height 0.5)
-					("Items-in-" :regexp t :height 0.3)
-					)))
+                                        (" *auto-async-byte-compile*" :height 0.3 :tail On)
+                                        ("*Kill Ring*" :height 0.5)
+                                        ("*Help*" :height 0.5)
+                                        ("*Completions*" :height 0.5)
+                                        ("*Ido Completions*" :height 0.5)
+                                        ("*Backtrace*" :height 0.5)
+                                        (" *undo-tree*" :height 0.5)
+                                        ("Items-in-" :regexp t :height 0.3)
+                                        )))
 
 ;; lcomp (list completion hacks)
 (bundle lcomp)
@@ -534,9 +551,9 @@
     (interactive "p")
     (message (buffer-file-name))
     (call-process "/usr/bin/pandoc" nil nil nil
-		  (buffer-file-name)
-		  "-s" "-o"
-		  "/tmp/mdconv.html")
+                  (buffer-file-name)
+                  "-s" "-o"
+                  "/tmp/mdconv.html")
     ;; (w3m-browse-url-other-window "file://tmp/mdconv.html"))
     (eww-open-file-other-window "/tmp/mdconv.html"))
   (define-key markdown-mode-map "\C-c\C-c" 'markdown-render-w3m))
@@ -579,8 +596,8 @@
   :name jaspace2
   (req jaspace
     (setq jaspace-modes (append jaspace-modes
-				(list 'makefile-mode
-				      'makefile-gmake-mode)))
+                                (list 'makefile-mode
+                                      'makefile-gmake-mode)))
     (setq jaspace-alternate-jaspace-string "□")
     (setq jaspace-highlight-tabs t)
     (setq jaspace-highlight-tabs ?^) ; abnormal
@@ -608,7 +625,6 @@
 ;;;-------------------------------------------------------------------
 (setq c-mode-common-hook
       '(lambda ()
-         (setq-default indent-tabs-mode nil)  ; tab -> white space
          (modify-syntax-entry ?: ".")
          (c-set-style "linux")
          (c-set-offset 'case-label' 4)
