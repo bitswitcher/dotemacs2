@@ -331,26 +331,6 @@
 ;; color-moccur
 (req color-moccur)
 
-;; whitespace
-;; (req whitespace
-;;   (set-face-foreground 'whitespace-space "DarkGoldenrod1")
-;;   (set-face-background 'whitespace-space nil)
-;;   (set-face-bold-p 'whitespace-space t)
-;;   (setq whitespace-style '(tabs
-;;                         trailing
-;;                         spaces
-;;                         space-mark
-;; ;;                         tab-mark
-;;                         ))
-;;   (setq whitespace-action '(auto-cleanup))
-;;   (global-whitespace-mode 1)
-;;   ;; highlight fullsize space
-;;   (setq whitespace-space-regexp "\\(\x3000+\\)")
-;;   (setq whitespace-display-mappings
-;;      '((space-mark ?\x3000 [?\□])
-;;        (tab-mark   ?\t   [?\xBB ?\t])
-;;        )))
-
 ;;;-------------------------------------------------------------------
 ;;; Packages (install with el-get-list-packages)
 ;;;-------------------------------------------------------------------
@@ -400,6 +380,21 @@
                         ;; and not required because the directory name is prepended
                         (substring input-pattern 1)
                       (concat ".*" input-pattern)))))))
+
+;; helm-swoop (Efficiently hopping squeezed lines powered by Emacs helm interface)
+(bundle helm-swoop)
+(req helm-swoop
+  (gdefkey "M-i" 'helm-swoop)
+  (gdefkey "M-I" 'helm-swoop-back-to-last-point)
+  ;; move on helm-swoop when isearch
+  (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+  ;; move on helm-multi-swoop-all when helm-swoop
+  (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+  (setq ace-isearch-use-function-from-isearch nil)
+  (setq helm-multi-swoop-edit-save t)
+  (setq helm-swoop-split-with-multiple-windows nil)
+  (setq helm-swoop-split-direction 'split-window-vertically)
+)
 
 ;; tabbar (Display a tab bar in the header line)
 (bundle tabbar)
@@ -520,8 +515,11 @@
 
 ;; ace-jump-mode (A quick cursor location minor mode for emacs)
 (bundle ace-jump-mode)
-(req ace-jump-mode
-  (gdefkey "C-c SPC" 'ace-jump-mode))
+(req ace-jump-mode)
+;; ace-isearch (provides a minor mode which combines isearch and ace-jump-mode)
+(bundle ace-isearch)
+(req ace-isearch
+  (global-ace-isearch-mode +1))
 
 ;; grep-a-lot (manages multiple search results buffers for grep.el)
 (bundle grep-a-lot)
