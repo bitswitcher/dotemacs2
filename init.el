@@ -248,15 +248,15 @@
 (gdefkey "M-t" 'follow-delete-other-windows-and-split)
 (gdefkey "M-/" 'redo)  ; undo set "C-/"
 ;; (gdefkey "M-%" 'foreign-regexp/query-replace)
-(global-set-key [f3] 'kmacro-start-macro-or-insert-counter)
-(global-set-key [f4] 'kmacro-end-or-call-macro)
-(global-set-key [f7] 'enlarge-window)
-(global-set-key [f8] 'enlarge-window-horizontally)
-(global-set-key [f9] 'point-to-register)
-(global-set-key [f10] 'jump-to-register)
-;; (global-set-key [f10] 'list-registers)
-(global-set-key [f11] 'backward-up-list)
-(global-set-key [f12] 'moccur-grep-find)
+(gdefkey "<f3>" 'kmacro-start-macro-or-insert-counter)
+(gdefkey "<f4>" 'kmacro-end-or-call-macro)
+(gdefkey "<f7>" 'enlarge-window)
+(gdefkey "<f8>" 'enlarge-window-horizontally)
+(gdefkey "<f9>" 'point-to-register)
+(gdefkey "<f10>" 'jump-to-register)
+;; (gdefkey "<f10>" 'list-registers)
+(gdefkey "<f11>" 'backward-up-list)
+(gdefkey "<f12>" 'moccur-grep-find)
 
 ;; isearch-mode-map
 (defkey isearch-mode-map "C-n" 'isearch-ring-advance)
@@ -346,7 +346,7 @@
   (gdefkey "M-y" 'helm-show-kill-ring)
   (gdefkey "C-x i" 'helm-imenu)
   (gdefkey "C-x b" 'helm-buffers-list)
-  (global-set-key [f1] 'helm-recentf)
+  (gdefkey "<f1>" 'helm-recentf)
 
   (defkey helm-map "C-h" 'delete-backward-char)
   (defkey helm-find-files-map "C-h" 'delete-backward-char)
@@ -537,8 +537,8 @@
 ;; gtags (gtags facility for Emacs)
 (bundle gtags)
 (req gtags
-  (global-set-key [f5] 'gtags-find-tag)       ; gtags-find-tag-other-window
-  (global-set-key [f6] 'gtags-pop-stack))
+  (gdefkey "<f5>" 'gtags-find-tag)       ; gtags-find-tag-other-window
+  (gdefkey "<f6>" 'gtags-pop-stack))
 
 ;; emacs-w3m (simple Emacs interface to w3m)
 (bundle emacs-w3m)
