@@ -348,10 +348,10 @@
   (gdefkey "C-x b" 'helm-buffers-list)
   (global-set-key [f1] 'helm-recentf)
 
-  (define-key helm-map (kbd "C-h") 'delete-backward-char)
-  (define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
-  (define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
-  (define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
+  (defkey helm-map "C-h" 'delete-backward-char)
+  (defkey helm-find-files-map "C-h" 'delete-backward-char)
+  (defkey helm-find-files-map "TAB" 'helm-execute-persistent-action)
+  (defkey helm-read-file-map "TAB" 'helm-execute-persistent-action)
 
   ;; Disable helm in some functions
   (add-to-list 'helm-completing-read-handlers-alist '(find-alternate-file . nil))
@@ -387,9 +387,9 @@
   (gdefkey "M-i" 'helm-swoop)
   (gdefkey "M-I" 'helm-swoop-back-to-last-point)
   ;; move on helm-swoop when isearch
-  (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+  (defkey isearch-mode-map "M-i" 'helm-swoop-from-isearch)
   ;; move on helm-multi-swoop-all when helm-swoop
-  (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+  (defkey helm-swoop-map "M-i" 'helm-multi-swoop-all-from-helm-swoop)
   (setq ace-isearch-use-function-from-isearch nil)
   (setq helm-multi-swoop-edit-save t)
   (setq helm-swoop-split-with-multiple-windows nil)
@@ -578,7 +578,7 @@
                   "/tmp/mdconv.html")
     ;; (w3m-browse-url-other-window "file://tmp/mdconv.html"))
     (eww-open-file-other-window "/tmp/mdconv.html"))
-  (define-key markdown-mode-map "\C-c\C-c" 'markdown-render-w3m))
+  (defkey markdown-mode-map "C-c C-c" 'markdown-render-w3m))
 
 ;; magit (An Emacs mode for Git)
 (bundle magit)
@@ -623,8 +623,7 @@
     (setq jaspace-alternate-jaspace-string "□")
     (setq jaspace-highlight-tabs t)
     (setq jaspace-highlight-tabs ?^) ; abnormal
-    (set-face-foreground 'jaspace-highlight-tab-face "red")
-    ))
+    (set-face-foreground 'jaspace-highlight-tab-face "red")))
 
 ;;;-------------------------------------------------------------------
 ;;; for dired mode
@@ -632,8 +631,7 @@
 (add-hook 'dired-load-hook
           '(lambda ()
              (load-library "ls-lisp")
-             (setq ls-lisp-dirs-first t)
-             ))
+             (setq ls-lisp-dirs-first t)))
 
 (require 'dired)
 (require 'dired-x)
@@ -643,25 +641,31 @@
 (defkey dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
 ;;;-------------------------------------------------------------------
+;;; for elisp-mode
+;;;-------------------------------------------------------------------
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil)))
+
+;;;-------------------------------------------------------------------
 ;;; for c-mode
 ;;;-------------------------------------------------------------------
-(setq c-mode-common-hook
-      '(lambda ()
-         (modify-syntax-entry ?: ".")
-         (c-set-style "linux")
-         (c-set-offset 'case-label' 4)
-         (setq comment-column 40)
-         (setq comment-multi-line t)
-         (setq c-auto-newline nil)
-         (setq c-tab-always-indent t)
-         (setq tab-width 4)
-         (setq c-basic-offset tab-width)
-         (setq c-indent-level tab-width)
-         (setq c-continued-statement-offset tab-width)
-         (setq c-argdecl-indent 0)
-         (subword-mode t)
-         (gtags-mode t)
-         ))
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (modify-syntax-entry ?: ".")
+            (c-set-style "linux")
+            (c-set-offset 'case-label' 4)
+            (setq comment-column 40)
+            (setq comment-multi-line t)
+            (setq c-auto-newline nil)
+            (setq c-tab-always-indent t)
+            (setq tab-width 4)
+            (setq c-basic-offset tab-width)
+            (setq c-indent-level tab-width)
+            (setq c-continued-statement-offset tab-width)
+            (setq c-argdecl-indent 0)
+            (subword-mode t)
+            (gtags-mode t)))
 
 ;;;-------------------------------------------------------------------
 ;;; for makefile-mode
