@@ -243,7 +243,6 @@
 ;; (gdefkey "C-t" '(lambda () (interactive) (ansi-term "/bin/bash")))
 ;; (gdefkey "C-t" '(lambda () (interactive) (ansi-term "/bin/tcsh")))
 (gdefkey "C-v" 'scroll-up)
-;; (gdefkey "C-c h" 'helm-mini)
 (gdefkey "M-g" 'goto-line)
 (gdefkey "M-h" 'help-for-help)
 (gdefkey "M-t" 'follow-delete-other-windows-and-split)
@@ -319,7 +318,7 @@
                                 (coding 12 12) " "
                                 (mode 15 -1))
                           ))
-  (gdefkey "\C-x\C-b" 'ibuffer))
+  (gdefkey "C-x C-b" 'ibuffer))
 
 ;; wdired
 (req wdired
@@ -357,6 +356,50 @@
 ;;;-------------------------------------------------------------------
 ;; with-eval-after-load-feature (Eval after loading feature with fine compilation)
 (bundle with-eval-after-load-feature)
+
+;; helm (Emacs incremental and narrowing framework)
+(bundle helm)
+(req helm-config
+  (helm-mode 1)
+  (gdefkey "C-c h" 'helm-mini)
+  (gdefkey "M-x" 'helm-M-x)
+  (gdefkey "M-y" 'helm-show-kill-ring)
+  (gdefkey "C-x i" 'helm-imenu)
+  (gdefkey "C-x b" 'helm-buffers-list)
+  (global-set-key [f1] 'helm-recentf)
+
+  (define-key helm-map (kbd "C-h") 'delete-backward-char)
+  (define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
+  (define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
+  (define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
+
+  ;; Disable helm in some functions
+  (add-to-list 'helm-completing-read-handlers-alist '(find-alternate-file . nil))
+
+  ;; Emulate `kill-line' in helm minibuffer
+  (setq helm-delete-minibuffer-contents-from-point t)
+  (defadvice helm-delete-minibuffer-contents (before helm-emulate-kill-line activate)
+    "Emulate `kill-line' in helm minibuffer"
+    (kill-new (buffer-substring (point) (field-end))))
+
+  (defadvice helm-ff-kill-or-find-buffer-fname (around execute-only-if-exist activate)
+    "Execute command only if CANDIDATE exists"
+    (when (file-exists-p candidate)
+      ad-do-it))
+
+  (defadvice helm-ff-transform-fname-for-completion (around my-transform activate)
+    "Transform the pattern to reflect my intention"
+    (let* ((pattern (ad-get-arg 0))
+           (input-pattern (file-name-nondirectory pattern))
+           (dirname (file-name-directory pattern)))
+      (setq input-pattern (replace-regexp-in-string "\\." "\\\\." input-pattern))
+      (setq ad-return-value
+            (concat dirname
+                    (if (string-match "^\\^" input-pattern)
+                        ;; '^' is a pattern for basename
+                        ;; and not required because the directory name is prepended
+                        (substring input-pattern 1)
+                      (concat ".*" input-pattern)))))))
 
 ;; tabbar (Display a tab bar in the header line)
 (bundle tabbar)
@@ -448,14 +491,6 @@
   (gdefkey "M-p" 'bm-previous)
   (gdefkey "M-SPC" 'bm-toggle))
 
-;; browse-kill-ring (Interactively insert items from kill-ring)
-(bundle browse-kill-ring)
-(req browse-kill-ring
-  (setq browse-kill-ring-quit-action 'kill-and-delete-window)
-  ;; (setq browse-kill-ring-highlight-current-entry t)
-  (setq browse-kill-ring-separator-face 'font-lock-comment-delimiter-face)
-  (gdefkey "M-y" 'browse-kill-ring))
-
 ;; sequential-command (Many commands into one command)
 (bundle sequential-command)
 ;; sequential-command-config (Examples of sequential-command)
@@ -487,17 +522,6 @@
 (bundle ace-jump-mode)
 (req ace-jump-mode
   (gdefkey "C-c SPC" 'ace-jump-mode))
-
-;; imenu-anywhere (Ido/helm imenu tag selection across all buffers with the same mode)
-(bundle imenu-anywhere)
-(req imenu-anywhere)
-
-;; recentf-ext (Recentf extensions)
-(bundle recentf-ext)
-(req recentf-ext
-  (setq recentf-exclude '("/TAGS$" "/var/tmp/" ".recentf" "COMMIT*" ".ido.last" ".revive.el" ".loaddefs.el"))
-  (setq recentf-max-saved-items 2000)
-  (global-set-key [f1] 'recentf-open-files))
 
 ;; grep-a-lot (manages multiple search results buffers for grep.el)
 (bundle grep-a-lot)
@@ -655,7 +679,6 @@
 ;;;-------------------------------------------------------------------
 ; magit-status
 ; re-builder
-; imenu-anywhere
 ; eshell
 ; ielm (C-c C-d => ielm finish)
 ; locate-library
