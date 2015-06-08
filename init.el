@@ -502,10 +502,6 @@
 
 ;; sequential-command (Many commands into one command)
 (bundle sequential-command)
-;; sequential-command-config (Examples of sequential-command)
-(bundle sequential-command-config)
-(req sequential-command-config
-  (sequential-command-setup-keys))
 
 ;; popwin (Popup Window Manager)
 (bundle popwin)
@@ -626,6 +622,12 @@
   :name gtags-ext
   (req gtags-ext
     (setq gtags-select-buffer-single t)))
+
+;; setup-sequential-command
+(bundle bitswitcher/setup-sequential-command-el
+  :name setup-sequential-command
+  (req setup-command-config
+    (sequential-command-setup-keys)))
 
 ;; jaspace2 (Make Japanese whitespaces visible)
 (bundle bitswitcher/jaspace-el
