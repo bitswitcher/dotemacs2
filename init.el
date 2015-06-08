@@ -354,6 +354,8 @@
 
   ;; Disable helm in some functions
   (add-to-list 'helm-completing-read-handlers-alist '(find-alternate-file . nil))
+  (add-to-list 'helm-completing-read-handlers-alist '(gtags-find-tag . nil))
+  (add-to-list 'helm-completing-read-handlers-alist '(gtags-find-rtag . nil))
 
   ;; Emulate `kill-line' in helm minibuffer
   (setq helm-delete-minibuffer-contents-from-point t)
