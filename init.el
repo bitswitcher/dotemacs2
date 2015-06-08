@@ -626,7 +626,7 @@
 ;; setup-sequential-command
 (bundle bitswitcher/setup-sequential-command-el
   :name setup-sequential-command
-  (req setup-command-config
+  (req setup-sequential-command
     (sequential-command-setup-keys)))
 
 ;; jaspace2 (Make Japanese whitespaces visible)
