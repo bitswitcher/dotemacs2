@@ -247,7 +247,6 @@
 (gdefkey "M-h" 'help-for-help)
 (gdefkey "M-t" 'follow-delete-other-windows-and-split)
 (gdefkey "M-/" 'redo)  ; undo set "C-/"
-;; (gdefkey "M-%" 'foreign-regexp/query-replace)
 (gdefkey "<f3>" 'kmacro-start-macro-or-insert-counter)
 (gdefkey "<f4>" 'kmacro-end-or-call-macro)
 (gdefkey "<f7>" 'enlarge-window)
@@ -485,6 +484,21 @@
   (gdefkey "M-n" 'bm-next)
   (gdefkey "M-p" 'bm-previous)
   (gdefkey "M-SPC" 'bm-toggle))
+
+;; pcre2el (parse, convert, and font-lock PCRE, Emacs and rx regexps)
+(bundle pcre2el)
+(req pcre2el
+  (custom-set-variables
+   ; tell re-builder to use pcre flaover of regexp
+   '(reb-re-syntax 'pcre)))
+
+;; visual-regexp-steroids (visual-regexp-steroids which enables the use of modern regexp engines)
+(bundle visual-regexp-steroids)
+(req visual-regexp-steroids
+  (setq vr/engine 'pcre2el)
+  (gdefkey "M-%" 'vr/query-replace)
+  (gdefkey "C-M-r" 'vr/isearch-backward)
+  (gdefkey "C-M-s" 'vr/isearch-forward))
 
 ;; sequential-command (Many commands into one command)
 (bundle sequential-command)
