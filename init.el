@@ -226,8 +226,7 @@
                 mode-name
                 mode-line-process
                 "%n" ")%] "
-                "-%-")
-              )
+                "-%-"))
 
 ;;;-------------------------------------------------------------------
 ;;; Key Binding
@@ -345,7 +344,6 @@
   (gdefkey "M-y" 'helm-show-kill-ring)
   (gdefkey "C-x i" 'helm-imenu)
   (gdefkey "C-x b" 'helm-buffers-list)
-  (gdefkey "<f1>" 'helm-recentf)
 
   (defkey helm-map "C-h" 'delete-backward-char)
   (defkey helm-find-files-map "C-h" 'delete-backward-char)
