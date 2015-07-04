@@ -415,6 +415,10 @@
   (setq helm-ag-use-agignore t)
   (gdefkey "<f12>" 'helm-ag))
 
+;; helm-ls-git (Yet another helm to list git file)
+(bundle helm-ls-git)
+(req helm-ls-git)
+
 ;; tabbar (Display a tab bar in the header line)
 (bundle tabbar)
 (req tabbar
