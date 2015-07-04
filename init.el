@@ -265,7 +265,7 @@
 (gdefkey "<f10>" 'jump-to-register)
 ;; (gdefkey "<f10>" 'list-registers)
 (gdefkey "<f11>" 'backward-up-list)
-(gdefkey "<f12>" 'moccur-grep-find)
+;; (gdefkey "<f12>" 'moccur-grep-find)
 
 ;; isearch-mode-map
 (defkey isearch-mode-map "C-n" 'isearch-ring-advance)
@@ -355,6 +355,7 @@
   (gdefkey "M-y" 'helm-show-kill-ring)
   (gdefkey "C-x i" 'helm-imenu)
   (gdefkey "C-x b" 'helm-buffers-list)
+  (gdefkey "<f2>" 'helm-resume)
 
   (defkey helm-map "C-h" 'delete-backward-char)
   (defkey helm-find-files-map "C-h" 'delete-backward-char)
@@ -405,6 +406,14 @@
   (setq helm-swoop-split-with-multiple-windows nil)
   (setq helm-swoop-split-direction 'split-window-vertically)
 )
+
+;; helm-ag (The silver search with helm interface)
+(bundle helm-ag)
+(req helm-ag
+  (setq helm-ag-command-option "--all-text")
+  (setq helm-ag-insert-at-point 'symbol)
+  (setq helm-ag-use-agignore t)
+  (gdefkey "<f12>" 'helm-ag))
 
 ;; tabbar (Display a tab bar in the header line)
 (bundle tabbar)
