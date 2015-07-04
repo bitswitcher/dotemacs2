@@ -109,6 +109,17 @@
     (split-window-horizontally))
   (other-window 1))
 
+;; kill all unmodified buffers
+(defun kill-all-buffer ()
+  (interactive)
+  (let ((buffers (buffer-list)))
+    (mapcar
+     #'(lambda (buf)
+         (if (and (not (buffer-modified-p buf))
+                  (not (string-match "^\\*.+\\*$" (buffer-name buf))))
+             (kill-buffer buf)))
+     buffers)))
+
 ;;;-------------------------------------------------------------------
 ;;; Base Setting
 ;;;-------------------------------------------------------------------
