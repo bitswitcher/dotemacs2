@@ -161,6 +161,7 @@
 (setq search-highlight nil)
 (setq require-final-newline nil)
 (setq next-line-add-newlines nil)
+(setq recentf-max-saved-items 1000)
 (setq grep-find-command "find . -exec grep \"\" {} /dev/null \\;") ; other grep options are set in bashrc
 (setq grep-command "grep -r \"\" .") ; other grep options are set in bashrc
 (setq compile-command "gcc -g -Wall -o test ")
