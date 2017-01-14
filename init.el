@@ -642,6 +642,24 @@
 (bundle git-commit-mode)
 (req git-commit-mode)
 
+;; (setenv "GOROOT" (concat (getenv "HOME") "/local/go"))
+;; (setenv "GOPATH" (concat (getenv "HOME") "/work"))
+
+;; go-mode (Major mode for the Go programming language)
+(bundle go-mode)
+(req go-mode)
+
+;; go-company (An autocompletion daemon for the Go programming language)
+(bundle go-company)
+(req go-company
+  (custom-set-variables
+   '(company-go-insert-arguments nil))
+)
+
+;; go-eldoc (eldoc plugin for Go)
+(bundle go-eldoc)
+(req go-eldoc)
+
 ;;;-------------------------------------------------------------------
 ;;; Packages (install 3rdparty elisp)
 ;;;-------------------------------------------------------------------
