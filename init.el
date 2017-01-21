@@ -349,20 +349,35 @@
 
 ;; company-mode (Modular in-buffer completion framework for Emacs)
 (bundle company-mode)
-(req company-mode
+(req company
   (global-company-mode)
   (setq company-idle-delay 0.5)
   (setq company-minimum-prefix-length 2)
   (setq company-selection-wrap-around t)
 
-  (define-key company-active-map (kbd "C-n") 'company-select-next)
-  (define-key company-active-map (kbd "C-p") 'company-select-previous)
-  (define-key company-search-map (kbd "C-n") 'company-select-next)
-  (define-key company-search-map (kbd "C-p") 'company-select-previous)
+  (defkey company-active-map "C-n" 'company-select-next)
+  (defkey company-active-map "C-p" 'company-select-previous)
+  (defkey company-search-map "C-n" 'company-select-next)
+  (defkey company-search-map "C-p" 'company-select-previous)
 
-  (define-key company-active-map (kbd "C-s") 'company-filter-candidates)
-  (define-key company-active-map (kbd "C-i") 'company-complete-selection)
-  (define-key emacs-lisp-mode-map (kbd "C-M-i") 'company-complete)
+  (defkey company-active-map "C-s" 'company-filter-candidates)
+  (defkey company-active-map "C-i" 'company-complete-selection)
+  (defkey emacs-lisp-mode-map "C-M-i" 'company-complete)
+
+  (set-face-attribute 'company-tooltip nil
+                      :foreground "black" :background "lightgrey")
+  (set-face-attribute 'company-tooltip-common nil
+                      :foreground "black" :background "lightgrey")
+  (set-face-attribute 'company-tooltip-common-selection nil
+                      :foreground "white" :background "steelblue")
+  (set-face-attribute 'company-tooltip-selection nil
+                      :foreground "black" :background "steelblue")
+  (set-face-attribute 'company-preview-common nil
+                      :background nil :foreground "lightgrey" :underline t)
+  (set-face-attribute 'company-scrollbar-fg nil
+                      :background "orange")
+  (set-face-attribute 'company-scrollbar-bg nil
+                      :background "gray40")
 )
 
 ;; helm (Emacs incremental and narrowing framework)
@@ -649,13 +664,6 @@
 (bundle go-mode)
 (req go-mode)
 
-;; go-company (An autocompletion daemon for the Go programming language)
-(bundle go-company)
-(req go-company
-  (custom-set-variables
-   '(company-go-insert-arguments nil))
-)
-
 ;; go-eldoc (eldoc plugin for Go)
 (bundle go-eldoc)
 (req go-eldoc)
@@ -702,6 +710,11 @@
     (setq jaspace-highlight-tabs ?^) ; abnormal
     (set-face-foreground 'jaspace-highlight-tab-face "red")))
 
+;; company-go
+(bundle company-go
+  :url "https://raw.githubusercontent.com/nsf/gocode/master/emacs-company/company-go.el"
+  (req company-go))
+
 ;;;-------------------------------------------------------------------
 ;;; for dired mode
 ;;;-------------------------------------------------------------------
@@ -743,6 +756,19 @@
             (setq c-argdecl-indent 0)
             (subword-mode t)
             (gtags-mode t)))
+
+;;;-------------------------------------------------------------------
+;;; for go-mode
+;;;-------------------------------------------------------------------
+(add-hook 'go-mode-hook 'company-mode)
+(add-hook 'go-mode-hook (lambda()
+           (add-hook 'before-save-hook' 'gofmt-before-save)
+           (local-set-key (kbd "<f5>") 'godef-jump)
+           (set (make-local-variable 'company-backends) '(company-go))
+           (company-mode)
+           (setq indent-tabs-mode nil)
+           (setq c-basic-offset 4)
+           (setq tab-width 4)))
 
 ;;;-------------------------------------------------------------------
 ;;; for makefile-mode
