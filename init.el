@@ -248,7 +248,7 @@
 (gdefkey "<left>" 'backward-word)
 (gdefkey "C-h" 'delete-backward-char)
 (gdefkey "C-j" 'newline)
-(gdefkey "C-o" 'hippie-expand)
+;; (gdefkey "C-o" 'hippie-expand)
 (gdefkey "C-q" 'scroll-down)
 (gdefkey "C-t" 'other-window-or-split)
 ;; (gdefkey "C-t" '(lambda () (interactive) (ansi-term "/bin/bash")))
@@ -351,18 +351,19 @@
 (bundle company-mode)
 (req company
   (global-company-mode)
-  (setq company-idle-delay 0.5)
+  (setq company-idle-delay nil)  ; default is 0.5
+  (setq company-dabbrev-downcase 0)
   (setq company-minimum-prefix-length 2)
   (setq company-selection-wrap-around t)
 
+  ; (gdefkey "TAB" 'company-complete-common-or-cycle)
+  (gdefkey "C-o" 'company-complete-common-or-cycle)
   (defkey company-active-map "C-n" 'company-select-next)
   (defkey company-active-map "C-p" 'company-select-previous)
   (defkey company-search-map "C-n" 'company-select-next)
   (defkey company-search-map "C-p" 'company-select-previous)
-
+  (defkey company-active-map "C-h" 'company-search-delete-char)
   (defkey company-active-map "C-s" 'company-filter-candidates)
-  (defkey company-active-map "C-i" 'company-complete-selection)
-  (defkey emacs-lisp-mode-map "C-M-i" 'company-complete)
 
   (set-face-attribute 'company-tooltip nil
                       :foreground "black" :background "lightgrey")
