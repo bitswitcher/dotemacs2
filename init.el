@@ -347,10 +347,11 @@
 ;; with-eval-after-load-feature (Eval after loading feature with fine compilation)
 (bundle with-eval-after-load-feature)
 
-;; company-mode (Modular in-buffer completion framework for Emacs)
 (bundle company-mode)
 (req company
   (global-company-mode)
+  (add-to-list 'company-backends '(company-capf :with company-dabbrev-code))
+  (setq company-transformers '(company-sort-by-statistics company-sort-by-backend-importance))
   (setq company-idle-delay nil)  ; default is 0.5
   (setq company-dabbrev-downcase 0)
   (setq company-minimum-prefix-length 2)
@@ -380,6 +381,11 @@
   (set-face-attribute 'company-scrollbar-bg nil
                       :background "gray40")
 )
+
+;; company-statistics (Sort completion candidates by previous completion choices)
+(bundle company-statistics)
+(req company-statistics
+     (company-statistics-mode))
 
 ;; helm (Emacs incremental and narrowing framework)
 (bundle helm)
