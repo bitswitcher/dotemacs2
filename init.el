@@ -568,6 +568,12 @@
 ;; sequential-command (Many commands into one command)
 (bundle sequential-command)
 
+;; Expand region increases the selected region by semantic units
+(bundle expand-region)
+(req expand-region
+  (gdefkey "C-u" 'er/expand-region)
+  (gdefkey "M-u" 'er/contract-region))
+
 ;; popwin (Popup Window Manager)
 (bundle popwin)
 (req popwin
