@@ -622,11 +622,11 @@
   (gdefkey "<f6>" 'gtags-pop-stack))
 
 ;; emacs-w3m (simple Emacs interface to w3m)
-(bundle emacs-w3m)
-(req emacs-w3m
-  (setq browse-url-generic-program
-    (executable-find "/usr/bin/w3m")
-    browse-url-browser-function 'browse-url-generic))
+;(bundle emacs-w3m)
+;(req emacs-w3m
+;  (setq browse-url-generic-program
+;    (executable-find "/usr/bin/w3m")
+;    browse-url-browser-function 'browse-url-generic))
 
 ;; websocket (websocket implementation in elisp, for emacs)
 (bundle websocket)
