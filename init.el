@@ -398,82 +398,6 @@
 (req company-statistics
      (company-statistics-mode))
 
-;; helm (Emacs incremental and narrowing framework)
-(bundle helm)
-(req helm-config
-  (add-to-list 'helm-completing-read-handlers-alist '(gtags-find-tag . nil))
-  (add-to-list 'helm-completing-read-handlers-alist '(gtags-find-rtag . nil))
-  (helm-mode 0))
-  ;; (helm-mode 1)
-  ;; (gdefkey "C-c h" 'helm-mini)
-  ;; (gdefkey "M-x" 'helm-M-x)
-  ;; (gdefkey "M-y" 'helm-show-kill-ring)
-  ;; (gdefkey "C-x i" 'helm-imenu)
-  ;; (gdefkey "C-x b" 'helm-buffers-list)
-  ;; (gdefkey "<f2>" 'helm-resume)
-
-  ;; (defkey helm-map "C-h" 'delete-backward-char)
-  ;; (defkey helm-find-files-map "C-h" 'delete-backward-char)
-  ;; (defkey helm-find-files-map "TAB" 'helm-execute-persistent-action)
-  ;; (defkey helm-read-file-map "TAB" 'helm-execute-persistent-action)
-
-  ;; ;; Disable helm in some functions
-  ;; (add-to-list 'helm-completing-read-handlers-alist '(find-alternate-file . nil))
-  ;; (add-to-list 'helm-completing-read-handlers-alist '(gtags-find-tag . nil))
-  ;; (add-to-list 'helm-completing-read-handlers-alist '(gtags-find-rtag . nil))
-
-  ;; ;; Emulate `kill-line' in helm minibuffer
-  ;; (setq helm-delete-minibuffer-contents-from-point t)
-  ;; (defadvice helm-delete-minibuffer-contents (before helm-emulate-kill-line activate)
-  ;;   "Emulate `kill-line' in helm minibuffer"
-  ;;   (kill-new (buffer-substring (point) (field-end))))
-
-  ;; (defadvice helm-ff-kill-or-find-buffer-fname (around execute-only-if-exist activate)
-  ;;   "Execute command only if CANDIDATE exists"
-  ;;   (when (file-exists-p candidate)
-  ;;     ad-do-it))
-
-  ;; (defadvice helm-ff-transform-fname-for-completion (around my-transform activate)
-  ;;   "Transform the pattern to reflect my intention"
-  ;;   (let* ((pattern (ad-get-arg 0))
-  ;;          (input-pattern (file-name-nondirectory pattern))
-  ;;          (dirname (file-name-directory pattern)))
-  ;;     (setq input-pattern (replace-regexp-in-string "\\." "\\\\." input-pattern))
-  ;;     (setq ad-return-value
-  ;;           (concat dirname
-  ;;                   (if (string-match "^\\^" input-pattern)
-  ;;                       ;; '^' is a pattern for basename
-  ;;                       ;; and not required because the directory name is prepended
-  ;;                       (substring input-pattern 1)
-  ;;                     (concat ".*" input-pattern)))))))
-
-;; helm-swoop (Efficiently hopping squeezed lines powered by Emacs helm interface)
-(bundle helm-swoop)
-(req helm-swoop
-  (gdefkey "M-i" 'helm-swoop)
-  (gdefkey "M-I" 'helm-swoop-back-to-last-point)
-  ;; move on helm-swoop when isearch
-  (defkey isearch-mode-map "M-i" 'helm-swoop-from-isearch)
-  ;; move on helm-multi-swoop-all when helm-swoop
-  (defkey helm-swoop-map "M-i" 'helm-multi-swoop-all-from-helm-swoop)
-  (setq ace-isearch-use-function-from-isearch nil)
-  (setq helm-multi-swoop-edit-save t)
-  (setq helm-swoop-split-with-multiple-windows nil)
-  (setq helm-swoop-split-direction 'split-window-vertically)
-)
-
-;; helm-ag (The silver search with helm interface)
-(bundle helm-ag)
-(req helm-ag
-  (setq helm-ag-command-option "--all-text")
-  (setq helm-ag-insert-at-point 'symbol)
-  (setq helm-ag-use-agignore t)
-  (gdefkey "<f12>" 'helm-ag))
-
-;; helm-ls-git (Yet another helm to list git file)
-(bundle helm-ls-git)
-(req helm-ls-git)
-
 ;; tabbar (Display a tab bar in the header line)
 (bundle tabbar)
 (req tabbar
@@ -608,14 +532,6 @@
 (req lcomp
   (lcomp-install))
 
-;; ace-jump-mode (A quick cursor location minor mode for emacs)
-(bundle ace-jump-mode)
-(req ace-jump-mode)
-;; ace-isearch (provides a minor mode which combines isearch and ace-jump-mode)
-(bundle ace-isearch)
-(req ace-isearch
-  (global-ace-isearch-mode +1))
-
 ;; grep-a-lot (manages multiple search results buffers for grep.el)
 (bundle grep-a-lot)
 (req grep-a-lot)
@@ -643,8 +559,8 @@
 ;    browse-url-browser-function 'browse-url-generic))
 
 ;; websocket (websocket implementation in elisp, for emacs)
-(bundle websocket)
-(req websocket)
+;; (bundle websocket)
+;; (req websocket)
 
 ;; markdown-mode (Major mode to edit Markdown files in Emacs)
 (bundle markdown-mode)
