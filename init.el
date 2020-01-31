@@ -161,7 +161,6 @@
 (setq search-highlight nil)
 (setq require-final-newline nil)
 (setq next-line-add-newlines nil)
-(setq recentf-max-saved-items 1000)
 (setq grep-find-command "find . -exec grep \"\" {} /dev/null \\;") ; other grep options are set in bashrc
 (setq grep-command "grep -r \"\" .") ; other grep options are set in bashrc
 (setq compile-command "gcc -g -Wall -o test ")
@@ -304,6 +303,18 @@
   (setq-default save-place t)
   (setq save-place-file (concat user-emacs-directory ".emacs-places")))
 
+;; recentf
+(req recentf
+  (req recentf-ext)
+  (setq recentf-save-file "~/.emacs.d/.recentf")
+  (setq recentf-max-saved-items 1000)
+  (setq recentf-auto-cleanup 'never)
+  (setq recentf-exclude '("\\.recentf" "COMMIT_EDITMSG" "ido.last"))
+  (gdefkey "<f2>" 'recentf-open-files)
+  (add-hook 'after-init-hook (lambda()
+                               (recentf-open-files)))
+  (recentf-mode 1))
+
 ;; ido-mode
 (req ido
   (ido-mode t))
@@ -390,48 +401,51 @@
 ;; helm (Emacs incremental and narrowing framework)
 (bundle helm)
 (req helm-config
-  (helm-mode 1)
-  (gdefkey "C-c h" 'helm-mini)
-  (gdefkey "M-x" 'helm-M-x)
-  (gdefkey "M-y" 'helm-show-kill-ring)
-  (gdefkey "C-x i" 'helm-imenu)
-  (gdefkey "C-x b" 'helm-buffers-list)
-  (gdefkey "<f2>" 'helm-resume)
-
-  (defkey helm-map "C-h" 'delete-backward-char)
-  (defkey helm-find-files-map "C-h" 'delete-backward-char)
-  (defkey helm-find-files-map "TAB" 'helm-execute-persistent-action)
-  (defkey helm-read-file-map "TAB" 'helm-execute-persistent-action)
-
-  ;; Disable helm in some functions
-  (add-to-list 'helm-completing-read-handlers-alist '(find-alternate-file . nil))
   (add-to-list 'helm-completing-read-handlers-alist '(gtags-find-tag . nil))
   (add-to-list 'helm-completing-read-handlers-alist '(gtags-find-rtag . nil))
+  (helm-mode 0))
+  ;; (helm-mode 1)
+  ;; (gdefkey "C-c h" 'helm-mini)
+  ;; (gdefkey "M-x" 'helm-M-x)
+  ;; (gdefkey "M-y" 'helm-show-kill-ring)
+  ;; (gdefkey "C-x i" 'helm-imenu)
+  ;; (gdefkey "C-x b" 'helm-buffers-list)
+  ;; (gdefkey "<f2>" 'helm-resume)
 
-  ;; Emulate `kill-line' in helm minibuffer
-  (setq helm-delete-minibuffer-contents-from-point t)
-  (defadvice helm-delete-minibuffer-contents (before helm-emulate-kill-line activate)
-    "Emulate `kill-line' in helm minibuffer"
-    (kill-new (buffer-substring (point) (field-end))))
+  ;; (defkey helm-map "C-h" 'delete-backward-char)
+  ;; (defkey helm-find-files-map "C-h" 'delete-backward-char)
+  ;; (defkey helm-find-files-map "TAB" 'helm-execute-persistent-action)
+  ;; (defkey helm-read-file-map "TAB" 'helm-execute-persistent-action)
 
-  (defadvice helm-ff-kill-or-find-buffer-fname (around execute-only-if-exist activate)
-    "Execute command only if CANDIDATE exists"
-    (when (file-exists-p candidate)
-      ad-do-it))
+  ;; ;; Disable helm in some functions
+  ;; (add-to-list 'helm-completing-read-handlers-alist '(find-alternate-file . nil))
+  ;; (add-to-list 'helm-completing-read-handlers-alist '(gtags-find-tag . nil))
+  ;; (add-to-list 'helm-completing-read-handlers-alist '(gtags-find-rtag . nil))
 
-  (defadvice helm-ff-transform-fname-for-completion (around my-transform activate)
-    "Transform the pattern to reflect my intention"
-    (let* ((pattern (ad-get-arg 0))
-           (input-pattern (file-name-nondirectory pattern))
-           (dirname (file-name-directory pattern)))
-      (setq input-pattern (replace-regexp-in-string "\\." "\\\\." input-pattern))
-      (setq ad-return-value
-            (concat dirname
-                    (if (string-match "^\\^" input-pattern)
-                        ;; '^' is a pattern for basename
-                        ;; and not required because the directory name is prepended
-                        (substring input-pattern 1)
-                      (concat ".*" input-pattern)))))))
+  ;; ;; Emulate `kill-line' in helm minibuffer
+  ;; (setq helm-delete-minibuffer-contents-from-point t)
+  ;; (defadvice helm-delete-minibuffer-contents (before helm-emulate-kill-line activate)
+  ;;   "Emulate `kill-line' in helm minibuffer"
+  ;;   (kill-new (buffer-substring (point) (field-end))))
+
+  ;; (defadvice helm-ff-kill-or-find-buffer-fname (around execute-only-if-exist activate)
+  ;;   "Execute command only if CANDIDATE exists"
+  ;;   (when (file-exists-p candidate)
+  ;;     ad-do-it))
+
+  ;; (defadvice helm-ff-transform-fname-for-completion (around my-transform activate)
+  ;;   "Transform the pattern to reflect my intention"
+  ;;   (let* ((pattern (ad-get-arg 0))
+  ;;          (input-pattern (file-name-nondirectory pattern))
+  ;;          (dirname (file-name-directory pattern)))
+  ;;     (setq input-pattern (replace-regexp-in-string "\\." "\\\\." input-pattern))
+  ;;     (setq ad-return-value
+  ;;           (concat dirname
+  ;;                   (if (string-match "^\\^" input-pattern)
+  ;;                       ;; '^' is a pattern for basename
+  ;;                       ;; and not required because the directory name is prepended
+  ;;                       (substring input-pattern 1)
+  ;;                     (concat ".*" input-pattern)))))))
 
 ;; helm-swoop (Efficiently hopping squeezed lines powered by Emacs helm interface)
 (bundle helm-swoop)
