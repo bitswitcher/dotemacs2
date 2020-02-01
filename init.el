@@ -314,9 +314,6 @@
                           "COMMIT_EDITMSG"
                           "ido\\.last"
                           "[/\\]\\.elpa/"))
-  (gdefkey "<f2>" 'recentf-open-files)
-  (add-hook 'after-init-hook (lambda()
-                               (recentf-open-files)))
   (recentf-mode 1))
 
 ;; ido-mode
@@ -335,7 +332,14 @@
   (bundle smex)
   (req smex
        (smex-initialize)
-       (gdefkey "M-x" 'smex)))
+       (gdefkey "M-x" 'smex))
+  (defun ido-recentf-open ()
+    "Use 'ido-completing-read' to find a recent file."
+    (interactive)
+    (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+        (message "Opening file...")
+      (message "Aborting")))
+  (gdefkey "<f2>" 'ido-recentf-open))
 
 ;; ibuf-ext
 (req ibuf-ext
