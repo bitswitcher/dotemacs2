@@ -309,7 +309,11 @@
   (setq recentf-save-file "~/.emacs.d/.recentf")
   (setq recentf-max-saved-items 1000)
   (setq recentf-auto-cleanup 'never)
-  (setq recentf-exclude '("\\.recentf" "COMMIT_EDITMSG" "ido.last"))
+  (setq recentf-exclude '("\\.recentf"
+                          "\\.revive.el"
+                          "COMMIT_EDITMSG"
+                          "ido\\.last"
+                          "[/\\]\\.elpa/"))
   (gdefkey "<f2>" 'recentf-open-files)
   (add-hook 'after-init-hook (lambda()
                                (recentf-open-files)))
@@ -317,7 +321,21 @@
 
 ;; ido-mode
 (req ido
-  (ido-mode t))
+  (ido-mode t)
+  (setq ido-enable-flex-matching t)
+  (ido-everywhere t)
+  (bundle ido-vertical-mode)
+  (req ido-vertical-mode
+       (ido-vertical-mode 1)
+       (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+       (setq ido-vertical-show-count 1))
+  (bundle ido-ubiquitous)
+  (req ido-ubiquitous
+       (ido-ubiquitous-mode t))
+  (bundle smex)
+  (req smex
+       (smex-initialize)
+       (gdefkey "M-x" 'smex)))
 
 ;; ibuf-ext
 (req ibuf-ext
@@ -725,6 +743,7 @@
 ;;;-------------------------------------------------------------------
 ;;; command memo
 ;;;-------------------------------------------------------------------
+; eval-buffer  ; to apply current init.el
 ; magit-status
 ; re-builder
 ; eshell
@@ -734,6 +753,7 @@
 ; list-faces-display / list-colors-display
 ; revert-buffer / reopen-file
 ; wipe
+; describe-bindings
 ; describe-face-at-point
 ; vc-*  [e.g] print-log/diff/version-diff/annotate
 ; table-insert
@@ -751,3 +771,4 @@
 ; ediff-merge / ediff-buffers / ediff-directories
 ; se/make-summary-buffer
 ; describe-char
+; recentf-cleanup
