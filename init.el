@@ -328,7 +328,7 @@
        (setq ido-vertical-show-count 1))
   (bundle ido-ubiquitous)
   (req ido-ubiquitous
-       (ido-ubiquitous-mode t))
+       (ido-ubiquitous-mode 0))  ; explicit disable since this can't be set gtag-find-tag default value
   (bundle smex)
   (req smex
        (smex-initialize)
