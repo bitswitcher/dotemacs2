@@ -319,12 +319,12 @@
 ;; ido-mode
 (req ido
   (ido-mode t)
-  (setq ido-enable-flex-matching t)
   (ido-everywhere t)
+  (setq ido-enable-flex-matching t)
   (bundle ido-vertical-mode)
   (req ido-vertical-mode
        (ido-vertical-mode 1)
-       (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+       (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
        (setq ido-vertical-show-count 1))
   (bundle ido-ubiquitous)
   (req ido-ubiquitous
