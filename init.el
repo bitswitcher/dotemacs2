@@ -265,7 +265,7 @@
 (gdefkey "<f10>" 'jump-to-register)
 ;; (gdefkey "<f10>" 'list-registers)
 (gdefkey "<f11>" 'backward-up-list)
-;; (gdefkey "<f12>" 'moccur-grep-find)
+(gdefkey "<f12>" 'moccur-grep-find)
 
 ;; isearch-mode-map
 (defkey isearch-mode-map "C-n" 'isearch-ring-advance)
@@ -565,7 +565,7 @@
   (setq dmoccur-recursive-search t)
   (setq moccur-split-word t)
   (setq dmoccur-exclusion-mask
-    (append '("\\~$" "\\.o$" "\\.a$" "\\.svn\\/\*" "\\.git\\/\*" "\\.hg\\/\*" "GPATH" "GRTAGS" "GSYMS" "GTAGS") dmoccur-exclusion-mask)))
+    (append '("\\~$" "\\.o$" "\\.a$" "\\.bin$" "\\.lib$" "\\.so$" "\\.obj$" "\\.elf$" "\\.dtb$" "\\.tmp$" "\\.map$" "\\.svn\\/\*" "\\.git\\/\*" "\\.hg\\/\*" "\\.repo\\/\*" "GPATH" "GRTAGS" "GTAGS") dmoccur-exclusion-mask)))
 
 ;; gtags (gtags facility for Emacs)
 (bundle gtags)
