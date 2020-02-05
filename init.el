@@ -383,12 +383,32 @@
 (bundle company-mode)
 (req company
   (global-company-mode)
-  (add-to-list 'company-backends '(company-capf :with company-dabbrev-code))
-  (setq company-transformers '(company-sort-by-statistics company-sort-by-backend-importance))
   (setq company-idle-delay nil)  ; default is 0.5
-  (setq company-dabbrev-downcase 0)
+  (setq completion-ignore-case t)
   (setq company-minimum-prefix-length 2)
   (setq company-selection-wrap-around t)
+  (setq company-global-modes
+        '(not message-mode git-commit-mode eshell-mode))
+
+  ;; company-dabbrev
+  (setq company-dabbrev-downcase 0)
+  (setq company-dabbrev-ignore-case nil)
+  (setq company-require-match nil)
+  (setq company-dabbrev-minimum-length 2)
+
+  (setq company-backends '(company-files
+                           (company-dabbrev-code company-gtags company-etags company-keywords)
+                           (company-capf company-dabbrev-code)
+                           ;;company-bbdb
+                           ;;company-eclim
+                           company-semantic
+                           ;;company-clang
+                           ;;company-xcode
+                           ;;company-cmake
+                           ;;company-oddmuse
+                           ))
+
+  (setq company-transformers '(company-sort-by-statistics company-sort-by-backend-importance))
 
   ; (gdefkey "TAB" 'company-complete-common-or-cycle)
   (gdefkey "C-o" 'company-complete-common-or-cycle)
@@ -398,6 +418,8 @@
   (defkey company-search-map "C-p" 'company-select-previous)
   (defkey company-active-map "C-h" 'company-search-delete-char)
   (defkey company-active-map "C-s" 'company-filter-candidates)
+  (defkey company-active-map "C-s" 'company-filter-candidates)
+  (defkey company-active-map "<tab>" 'company-indent-or-complete-common)
 
   (set-face-attribute 'company-tooltip nil
                       :foreground "black" :background "lightgrey")
@@ -535,19 +557,19 @@
   (gdefkey "M-u" 'er/contract-region))
 
 ;; popwin (Popup Window Manager)
-(bundle popwin)
-(req popwin
-  (setq display-buffer-function 'popwin:display-buffer)
-  (setq popwin:special-display-config '(
-                                        (" *auto-async-byte-compile*" :height 0.3 :tail On)
-                                        ("*Kill Ring*" :height 0.5)
-                                        ("*Help*" :height 0.5)
-                                        ("*Completions*" :height 0.5)
-                                        ("*Ido Completions*" :height 0.5)
-                                        ("*Backtrace*" :height 0.5)
-                                        (" *undo-tree*" :height 0.5)
-                                        ("Items-in-" :regexp t :height 0.3)
-                                        )))
+;; (bundle popwin)
+;; (req popwin
+;;   (setq display-buffer-function 'popwin:display-buffer)
+;;   (setq popwin:special-display-config '(
+;;                                         (" *auto-async-byte-compile*" :height 0.3 :tail On)
+;;                                         ("*Kill Ring*" :height 0.5)
+;;                                         ("*Help*" :height 0.5)
+;;                                         ("*Completions*" :height 0.5)
+;;                                         ("*Ido Completions*" :height 0.5)
+;;                                         ("*Backtrace*" :height 0.5)
+;;                                         (" *undo-tree*" :height 0.5)
+;;                                         ("Items-in-" :regexp t :height 0.3)
+;;                                         )))
 
 ;; lcomp (list completion hacks)
 (bundle lcomp)
@@ -616,7 +638,7 @@
 ;; magit (An Emacs mode for Git)
 (bundle magit)
 (req magit
-  (setq magit-last-seen-setup-instructions "1.4.0"))
+  (setq magit-completing-read-function 'magit-ido-completing-read))
 
 ;; git-commit-mode (Major mode for editing git commit messages)
 (bundle git-commit-mode)
@@ -625,13 +647,13 @@
 ;; (setenv "GOROOT" (concat (getenv "HOME") "/local/go"))
 ;; (setenv "GOPATH" (concat (getenv "HOME") "/work"))
 
-;; go-mode (Major mode for the Go programming language)
-(bundle go-mode)
-(req go-mode)
+;; ;; go-mode (Major mode for the Go programming language)
+;; (bundle go-mode)
+;; (req go-mode)
 
-;; go-eldoc (eldoc plugin for Go)
-(bundle go-eldoc)
-(req go-eldoc)
+;; ;; go-eldoc (eldoc plugin for Go)
+;; (bundle go-eldoc)
+;; (req go-eldoc)
 
 ;;;-------------------------------------------------------------------
 ;;; Packages (install 3rdparty elisp)
@@ -676,9 +698,9 @@
     (set-face-foreground 'jaspace-highlight-tab-face "red")))
 
 ;; company-go
-(bundle company-go
-  :url "https://raw.githubusercontent.com/nsf/gocode/master/emacs-company/company-go.el"
-  (req company-go))
+;; (bundle company-go
+;;   :url "https://raw.githubusercontent.com/nsf/gocode/master/emacs-company/company-go.el"
+;;   (req company-go))
 
 ;;;-------------------------------------------------------------------
 ;;; for dired mode
