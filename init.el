@@ -587,7 +587,7 @@
   (setq dmoccur-recursive-search t)
   (setq moccur-split-word t)
   (setq dmoccur-exclusion-mask
-    (append '("\\~$" "\\.o$" "\\.a$" "\\.bin$" "\\.lib$" "\\.so$" "\\.obj$" "\\.elf$" "\\.dtb$" "\\.tmp$" "\\.map$" "\\.svn\\/\*" "\\.git\\/\*" "\\.hg\\/\*" "\\.repo\\/\*" "GPATH" "GRTAGS" "GTAGS") dmoccur-exclusion-mask)))
+        (append '("\\~$" "\\.o$" "\\.a$" "\\.bin$" "\\.lib$" "\\.so$" "\\.obj$" "\\.zip$" "\\.tgz$" "\\.gz$" "\\.xz$" "\\.elf$" "\\.dtb$" "\\.tmp$" "\\.map$" "\\\.svn\\/\*" "\\.git\\/\*" "\\.hg\\/\*" "\\.repo\\/\*" "GPATH" "GRTAGS" "GTAGS") dmoccur-exclusion-mask)))
 
 ;; gtags (gtags facility for Emacs)
 (bundle gtags)
