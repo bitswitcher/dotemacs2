@@ -372,7 +372,12 @@
   (setq uniquify-buffer-name-style 'post-forward-angle-brackets))
 
 ;; color-moccur
-(req color-moccur)
+(req color-moccur
+  (setq moccur-grep-default-word-near-point t)
+  (setq dmoccur-recursive-search t)
+  (setq moccur-split-word t)
+  (setq dmoccur-exclusion-mask
+        (append '("\\~$" "\\.o$" "\\.a$" "\\.bin$" "\\.lib$" "\\.so$" "\\.obj$" "\\.zip$" "\\.tgz$" "\\.gz$" "\\.xz$" "\\.elf$" "\\.dtb$" "\\.tmp$" "\\.map$" "\\\.svn\\/\*" "\\.git\\/\*" "\\.hg\\/\*" "\\.repo\\/\*" "GPATH" "GRTAGS" "GTAGS") dmoccur-exclusion-mask)))
 
 ;;;-------------------------------------------------------------------
 ;;; Packages (install with el-get-list-packages)
@@ -582,12 +587,7 @@
 
 ;; moccur-edit (apply replaces to multiple files)
 (bundle moccur-edit)
-(req moccur-edit
-  (setq moccur-grep-default-word-near-point t)
-  (setq dmoccur-recursive-search t)
-  (setq moccur-split-word t)
-  (setq dmoccur-exclusion-mask
-        (append '("\\~$" "\\.o$" "\\.a$" "\\.bin$" "\\.lib$" "\\.so$" "\\.obj$" "\\.zip$" "\\.tgz$" "\\.gz$" "\\.xz$" "\\.elf$" "\\.dtb$" "\\.tmp$" "\\.map$" "\\\.svn\\/\*" "\\.git\\/\*" "\\.hg\\/\*" "\\.repo\\/\*" "GPATH" "GRTAGS" "GTAGS") dmoccur-exclusion-mask)))
+(req moccur-edit)
 
 ;; gtags (gtags facility for Emacs)
 (bundle gtags)
@@ -723,6 +723,14 @@
 (add-hook 'emacs-lisp-mode-hook
           (lambda ()
             (setq indent-tabs-mode nil)))
+
+;;;-------------------------------------------------------------------
+;;; for moccur-mode
+;;;-------------------------------------------------------------------
+;; (defkey moccur-mode-map "n" 'next-line)
+;; (defkey moccur-mode-map "p" 'previous-line)
+(defkey moccur-mode-map "C-v" 'scroll-up)
+(defkey moccur-mode-map "C-q" 'scroll-down)
 
 ;;;-------------------------------------------------------------------
 ;;; for c-mode
