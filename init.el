@@ -609,6 +609,7 @@
 ;; markdown-mode (Major mode to edit Markdown files in Emacs)
 (bundle markdown-mode)
 (req markdown-mode
+  (setq markdown-fontify-code-blocks-natively t)
   (defun markdown-custom ()
     "markdown-mode-hook"
     (setq markdown-command-needs-filename t))
@@ -806,3 +807,5 @@
 ; se/make-summary-buffer
 ; describe-char
 ; recentf-cleanup
+; markdown-toggle-markup-hiding (C-c C-x ENTER)
+; markdown-live-preview-mode (need eww)
