@@ -375,9 +375,7 @@
 (req color-moccur
   (setq moccur-grep-default-word-near-point t)
   (setq dmoccur-recursive-search t)
-  (setq moccur-split-word t)
-  (setq dmoccur-exclusion-mask
-        (append '("\\~$" "\\.o$" "\\.a$" "\\.bin$" "\\.lib$" "\\.so$" "\\.obj$" "\\.zip$" "\\.tgz$" "\\.gz$" "\\.xz$" "\\.elf$" "\\.dtb$" "\\.tmp$" "\\.map$" "\\\.svn\\/\*" "\\.git\\/\*" "\\.hg\\/\*" "\\.repo\\/\*" "GPATH" "GRTAGS" "GTAGS") dmoccur-exclusion-mask)))
+  (setq moccur-split-word t))
 
 ;;;-------------------------------------------------------------------
 ;;; Packages (install with el-get-list-packages)
@@ -588,6 +586,8 @@
 ;; moccur-edit (apply replaces to multiple files)
 (bundle moccur-edit)
 (req moccur-edit)
+(setq dmoccur-exclusion-mask
+      (append '("\\~$" "\\.o$" "\\.a$" "\\.bin$" "\\.lib$" "\\.so$" "\\.obj$" "\\.zip$" "\\.tgz$" "\\.gz$" "\\.xz$" "\\.elf$" "\\.dtb$" "\\.tmp$" "\\.map$" "\\\.svn\\/\*" "\\.git\\/\*" "\\.hg\\/\*" "\\.repo\\/\*" "GPATH" "GRTAGS" "GTAGS") dmoccur-exclusion-mask))
 
 ;; gtags (gtags facility for Emacs)
 (bundle gtags)
