@@ -801,6 +801,7 @@
 ; gud-gdb (face -> comint-highlight-input)
 ; moccur-grep / moccur-grep-find
 ; align / align-regexp / indent-region
+; untabify
 ; follow-mode (follow-delete-other-windows-and-split)
 ; column-highlight-mode
 ; ediff-merge / ediff-buffers / ediff-directories
